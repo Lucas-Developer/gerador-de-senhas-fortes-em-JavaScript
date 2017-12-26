@@ -3,32 +3,42 @@
   <head>
     <title>Gerador de senhas</title>
     <meta name="author" content="Lucas | lucas_developer@tutamail.com" />
-
-    <script type="text/javascript">
+    <style type="text/css">
       <!--
-      // função dec2hex: converte números decimais em números hexadecimais 
-      function dec2hex(numero) {
-        var base = 16;
-        var digito = new Array();
-        var i = 0;
-
-        while (numero != 0) {
-          i++;
+      * {font: 11px Verdana}
+      .campo1 {width: 180px}
+      .campo2 {width: 40px}
+      .campo1, .campo2 {border: solid 1px #CCC}
+      .botao {border: solid 1px #BBB; background-color: #EEE; cursor: pointer}
+      #aguarde {font-style: italic}
+      -->
+    </style>
+  </head>
+  <body>
+    <form action="#" onsubmit="GerarSenha(); return false">
+      Senha: <input type="text" name="senha" size="30" class="campo1" readonly="readonly" />&nbsp;&nbsp;
+      <input type="submit" value="Gerar senha" class="botao" /><br /><br />
+      DÃ­gitos: <input type="text" value="20" name="digitos" size="3" class="campo2" maxlength="2" /> 
+    </form><br />
+    <div id="aguarde"></div> 
+  </body>
+  <script type="text/javascript">
+      <!--
+      // funÃ§Ã£o dec2hex: converte nÃºmeros decimais em nÃºmeros hexadecimais 
+      function dec2hex(randomNumber) {
+        const base = 16;
+        let digito = [];
+        let value = "";
+        let index = 0;
+        let hexValues = [0, 1, 2, 3, 4, 5, 6, 7,8, 9, 'A', 'B', 'C', 'D', 'E', 'F'];
+        while (randomNumber != 0) {
+          index++;
           digito[i] = numero % base;
-          numero = Math.floor(numero / base);
+          randomNumber = Math.floor(numero / base);
         }
-        value = "";
-        while (i >= 1)  {
-          switch (digito[i]) {
-            case 10: { value += "A"; break }
-            case 11: { value += "B"; break }
-            case 12: { value += "C"; break }
-            case 13: { value += "D"; break }
-            case 14: { value += "E"; break }
-            case 15: { value += "F"; break }
-            default: { value += digito[i]; break }
-          }
-          i--;
+        while (index >= 1)  {
+         value += hexValues[digito[index]];
+         index--;
         }
         return value;
       }
@@ -37,18 +47,18 @@
         document.forms[0].senha.value = "";
         tamanho = document.forms[0].digitos.value;
 
-        // validar o campo *dígitos*
+        // validar o campo *dÃ­gitos*
         if (tamanho < 1 || isNaN(tamanho)) {
-          alert("Escolha um valor numérico válido para esse campo");
+          alert("Escolha um valor numÃ©rico vÃ¡lido para esse campo");
           document.forms[0].digitos.focus();
           document.forms[0].digitos.select();
           return;
         }
 
-        // ajusta o tamanho (em pixels) do campo de acordo com o número de dígitos
+        // ajusta o tamanho (em pixels) do campo de acordo com o nÃºmero de dÃ­gitos
         document.forms[0].senha.style.width = (tamanho * 9) + "px";
 
-        // códigos ASCII decimais
+        // cÃ³digos ASCII decimais
         min = 32;
         max = 126;
 
@@ -63,25 +73,4 @@
       }
       //-->
     </script>
-
-    <style type="text/css">
-      <!--
-      * {font: 11px Verdana}
-      .campo1 {width: 180px}
-      .campo2 {width: 40px}
-      .campo1, .campo2 {border: solid 1px #CCC}
-      .botao {border: solid 1px #BBB; background-color: #EEE; cursor: pointer}
-      #aguarde {font-style: italic}
-      -->
-    </style>
-  </head>
-
-  <body>
-    <form action="#" onsubmit="GerarSenha(); return false">
-      Senha: <input type="text" name="senha" size="30" class="campo1" readonly="readonly" />&nbsp;&nbsp;
-      <input type="submit" value="Gerar senha" class="botao" /><br /><br />
-      Dígitos: <input type="text" value="20" name="digitos" size="3" class="campo2" maxlength="2" /> 
-    </form><br />
-    <div id="aguarde"></div> 
-  </body>
 </html>
